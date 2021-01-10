@@ -44,13 +44,12 @@ public class Main {
     Predictions correct = new Predictions(
         "Correct",
         new ArrayList<>(
-            Arrays.asList(BILLS, RAMS, EMPTY, EMPTY, EMPTY, EMPTY)),
+            Arrays.asList(BILLS, RAMS, EMPTY, EMPTY, EMPTY, BUCCANEERS)),
         new ArrayList<>(Arrays.asList(EMPTY, EMPTY, EMPTY, EMPTY)),
         new ArrayList<>(Arrays.asList(EMPTY, EMPTY)),
         new ArrayList<>(Arrays.asList(EMPTY)),
         0
     );
-
 
     List<Predictions> rgPredictionsList = new ArrayList();
     List<Predictions> shotPredictionsList = new ArrayList();
