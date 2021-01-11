@@ -44,7 +44,7 @@ public class Main {
     Predictions correct = new Predictions(
         "Correct",
         new ArrayList<>(
-            Arrays.asList(BILLS, RAMS, EMPTY, EMPTY, EMPTY, BUCCANEERS)),
+            Arrays.asList(BILLS, RAMS, BUCCANEERS, RAVENS, SAINTS, BROWNS)),
         new ArrayList<>(Arrays.asList(EMPTY, EMPTY, EMPTY, EMPTY)),
         new ArrayList<>(Arrays.asList(EMPTY, EMPTY)),
         new ArrayList<>(Arrays.asList(EMPTY)),
@@ -252,8 +252,8 @@ public class Main {
         new ArrayList<String>(
             Arrays.asList(BROWNS, TITANS, BILLS, SEAHAWKS, BUCCANEERS, SAINTS)),
         new ArrayList<String>(Arrays.asList(CHIEFS, BILLS, PACKERS, SAINTS)),
-        new ArrayList<String>(Arrays.asList()),
-        new ArrayList<String>(Arrays.asList()),
+        new ArrayList<String>(Arrays.asList(BILLS, PACKERS)),
+        new ArrayList<String>(Arrays.asList(BILLS)),
         0
     );
 
@@ -540,31 +540,34 @@ public class Main {
 
     System.out.println();
 
-    System.out.format("%22s\n", "RG STANDINGS");
+    System.out.format("%28s\n", "RG STANDINGS");
     System.out.println();
     for(int i = 0; i < rgPredictionsList.size(); i++) {
       Predictions p = rgPredictionsList.get(i);
-      System.out.format("%2d%15s%5d\n", i + 1, p.getName(), p.getTotalPoints());
+      System.out.format("%2d%15s%5d%2s%4d\n", i + 1, p.getName(), p.getTotalPoints(), "/",
+          p.getMaxPoints());
     }
 
     System.out.println();
     System.out.println();
 
-    System.out.format("%22s\n", "THE SHOT STANDINGS");
+    System.out.format("%28s\n", "THE SHOT STANDINGS");
     System.out.println();
     for(int i = 0; i < shotPredictionsList.size(); i++) {
       Predictions p = shotPredictionsList.get(i);
-      System.out.format("%2d%15s%5d\n", i + 1, p.getName(), p.getTotalPoints());
+      System.out.format("%2d%15s%5d%2s%4d\n", i + 1, p.getName(), p.getTotalPoints(), "/",
+          p.getMaxPoints());
     }
 
     System.out.println();
     System.out.println();
 
-    System.out.format("%22s\n", "BETTING POOL");
+    System.out.format("%28s\n", "BETTING POOL STANDINGS");
     System.out.println();
     for(int i = 0; i < bettingPool.size(); i++) {
       Predictions p = bettingPool.get(i);
-      System.out.format("%2d%15s%5d\n", i + 1, p.getName(), p.getTotalPoints());
+      System.out.format("%2d%15s%5d%2s%4d\n", i + 1, p.getName(), p.getTotalPoints(), "/",
+          p.getMaxPoints());
     }
   }
 
