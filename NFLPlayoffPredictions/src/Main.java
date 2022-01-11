@@ -19,9 +19,11 @@ public class Main {
   public static final String BROWNS = "Browns";
   public static final String TITANS = "Titans";
   public static final String WASHINGTON = "Washington";
-  public static final String EMPTY = "Empty";
+  private static final String BENGALS = "Bengals";
+  private static final String COWBOYS = "Cowboys";
   public static final String BEARS = "Bears";
   public static final String COLTS = "Colts";
+  public static final String EMPTY = "Empty";
   public static final String WILD_CARD = "Wild Card";
   public static final String DIVISIONAL = "Divisional";
   public static final String CONFERENCE = "Conference";
@@ -29,27 +31,123 @@ public class Main {
 
   public static void main(String [] args) {
 
+    /**
+     * 2021 PLAYOFFS
+     */
+
     // results
 
-//    Predictions correct = new Predictions(
-//        "Chalk",
-//        new ArrayList<>(
-//            Arrays.asList(BILLS, STEELERS, TITANS, SAINTS, SEAHAWKS, WASHINGTON)),
-//        new ArrayList<>(Arrays.asList(CHIEFS, BILLS, PACKERS, SAINTS)),
-//        new ArrayList<>(Arrays.asList(CHIEFS, PACKERS)),
-//        new ArrayList<>(Arrays.asList(CHIEFS)),
-//        0
-//    );
+//    results2021();
+
+    /**
+     * 2022 PLAYOFFS
+     */
+
+
+
+    Predictions chalk = new Predictions(
+        "CHALK",
+        new ArrayList<>(
+            Arrays.asList(BENGALS, BILLS, BUCCANEERS, COWBOYS, CHIEFS, RAMS)),
+        new ArrayList<>(Arrays.asList(TITANS, CHIEFS, PACKERS, BUCCANEERS)),
+        new ArrayList<>(Arrays.asList(TITANS, PACKERS)),
+        new ArrayList<>(Arrays.asList(PACKERS)),
+        0
+    );
 
     Predictions correct = new Predictions(
-        "Correct",
+        "CORRECT",
         new ArrayList<>(
-            Arrays.asList(BILLS, RAMS, BUCCANEERS, RAVENS, SAINTS, BROWNS)),
+            Arrays.asList(EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY)),
         new ArrayList<>(Arrays.asList(EMPTY, EMPTY, EMPTY, EMPTY)),
         new ArrayList<>(Arrays.asList(EMPTY, EMPTY)),
         new ArrayList<>(Arrays.asList(EMPTY)),
         0
     );
+
+    List<Predictions> roland_glen_predictions = new ArrayList();
+    List<Predictions> hitch_route_panel_predictions = new ArrayList();
+    List<Predictions> hitch_route_pool_predictions = new ArrayList();
+
+    // participant predictions
+
+    Predictions anish_kottu_1 = new Predictions(
+        "Anish Kottu 1",
+        new ArrayList<>(
+            Arrays.asList(BENGALS, BILLS, BUCCANEERS, COWBOYS, CHIEFS, RAMS)),
+        new ArrayList<>(Arrays.asList(TITANS, CHIEFS, PACKERS, BUCCANEERS)),
+        new ArrayList<>(Arrays.asList(TITANS, PACKERS)),
+        new ArrayList<>(Arrays.asList(PACKERS)),
+        0
+    );
+
+    roland_glen_predictions.add(anish_kottu_1);
+
+    hitch_route_panel_predictions.add(anish_kottu_1);
+
+    hitch_route_pool_predictions.add(anish_kottu_1);
+
+
+    String[] rounds = {WILD_CARD, DIVISIONAL, CONFERENCE, SUPER_BOWL};
+
+    HashMap<String, TreeMap<String, Integer>> roland_glen_prediction_map = new HashMap<>();
+    initializePredictionMap(roland_glen_prediction_map);
+    populatePredictionMap(roland_glen_predictions, rounds, roland_glen_prediction_map);
+    System.out.println();
+    System.out.format("%60s\n", "RG WINNER FREQUENCIES");
+    System.out.println();
+    displayWinnerPickFrequencies(roland_glen_prediction_map);
+
+    roland_glen_predictions.add(chalk);
+    hitch_route_panel_predictions.add(chalk);
+    hitch_route_pool_predictions.add(chalk);
+
+    updatePoints(
+        correct,
+        roland_glen_predictions,
+        hitch_route_panel_predictions,
+        hitch_route_pool_predictions);
+
+    Collections.shuffle(roland_glen_predictions);
+
+    Collections.sort(roland_glen_predictions, Collections.reverseOrder());
+
+    // display all point totals
+
+    System.out.println();
+
+    System.out.format("%39s\n", "RG STANDINGS");
+    System.out.println();
+    for(int i = 0; i < roland_glen_predictions.size(); i++) {
+      Predictions p = roland_glen_predictions.get(i);
+      System.out.format("%3d%25s%5d%2s%4d\n", i + 1, p.getName(), p.getTotalPoints(), "/",
+          p.getMaxPoints());
+    }
+
+    System.out.println();
+    System.out.println();
+  }
+
+  private static void results2021() {
+    Predictions correct = new Predictions(
+        "Chalk",
+        new ArrayList<>(
+            Arrays.asList(BILLS, STEELERS, TITANS, SAINTS, SEAHAWKS, WASHINGTON)),
+        new ArrayList<>(Arrays.asList(CHIEFS, BILLS, PACKERS, SAINTS)),
+        new ArrayList<>(Arrays.asList(CHIEFS, PACKERS)),
+        new ArrayList<>(Arrays.asList(CHIEFS)),
+        0
+    );
+
+//    Predictions correct = new Predictions(
+//        "Correct",
+//        new ArrayList<>(
+//            Arrays.asList(BILLS, RAMS, BUCCANEERS, RAVENS, SAINTS, BROWNS)),
+//        new ArrayList<>(Arrays.asList(EMPTY, EMPTY, EMPTY, EMPTY)),
+//        new ArrayList<>(Arrays.asList(EMPTY, EMPTY)),
+//        new ArrayList<>(Arrays.asList(EMPTY)),
+//        0
+//    );
 
     List<Predictions> rgPredictionsList = new ArrayList();
     List<Predictions> shotPredictionsList = new ArrayList();
@@ -585,18 +683,18 @@ public class Main {
     }
   }
 
-  private static void updatePoints(Predictions correct, List<Predictions> rgPredictionsList,
-      List<Predictions> shotPredictionsList, List<Predictions> bettingPool) {
-    for(Predictions p: rgPredictionsList) {
+  private static void updatePoints(Predictions correct, List<Predictions> predictions1,
+      List<Predictions> predictions2, List<Predictions> predictions3) {
+    for(Predictions p: predictions1) {
       p.updatePoints(correct);
     }
-    for(Predictions p: shotPredictionsList) {
-      if(!rgPredictionsList.contains(p)) {
+    for(Predictions p: predictions2) {
+      if(!predictions1.contains(p)) {
         p.updatePoints(correct);
       }
     }
-    for(Predictions p: bettingPool) {
-      if(!rgPredictionsList.contains(p) && !shotPredictionsList.contains(p)) {
+    for(Predictions p: predictions3) {
+      if(!predictions1.contains(p) && !predictions2.contains(p)) {
         p.updatePoints(correct);
       }
     }
@@ -623,7 +721,7 @@ public class Main {
   }
 
   private static void initializePredictionMap(
-      HashMap<String, TreeMap<String, Integer>> rgPredictionMap) {
+      HashMap<String, TreeMap<String, Integer>> predictionMap) {
     TreeMap<String, Integer> wildCardPredictions = new TreeMap<>();
     TreeMap<String, Integer> divisionalPredictions = new TreeMap<>();
     TreeMap<String, Integer> conferencePredictions = new TreeMap<>();
@@ -634,10 +732,10 @@ public class Main {
     initializeRoundMap(conferencePredictions);
     initializeRoundMap(superBowlPredictions);
 
-    rgPredictionMap.put(WILD_CARD, wildCardPredictions);
-    rgPredictionMap.put(DIVISIONAL, divisionalPredictions);
-    rgPredictionMap.put(CONFERENCE, conferencePredictions);
-    rgPredictionMap.put(SUPER_BOWL, superBowlPredictions);
+    predictionMap.put(WILD_CARD, wildCardPredictions);
+    predictionMap.put(DIVISIONAL, divisionalPredictions);
+    predictionMap.put(CONFERENCE, conferencePredictions);
+    predictionMap.put(SUPER_BOWL, superBowlPredictions);
   }
 
 
@@ -656,6 +754,9 @@ public class Main {
     map.put(WASHINGTON, 0);
     map.put(BEARS, 0);
     map.put(COLTS, 0);
+    map.put(BENGALS, 0);
+    map.put(COWBOYS, 0);
+
   }
 
 }

@@ -40,15 +40,15 @@ public class Predictions implements Comparable {
             if (correct.wildCardPredictions.contains(this.wildCardPredictions.get(i))) {
                 this.totalPoints += 10;
             } else {
-                this.maxPoints -= 10;
+//                this.maxPoints -= 10;
                 if(this.divisionalRoundPredictions.contains(this.wildCardPredictions.get(i))) {
-                    this.maxPoints -= 20;
+//                    this.maxPoints -= 20;
                 }
                 if(this.conferenceTitlePredictions.contains(this.wildCardPredictions.get(i))) {
-                    this.maxPoints -= 40;
+//                    this.maxPoints -= 40;
                 }
                 if(this.superbowlPredictions.contains(this.wildCardPredictions.get(i))) {
-                    this.maxPoints -= 80;
+//                    this.maxPoints -= 80;
                 }
             }
         }
