@@ -3,21 +3,17 @@ import java.io.*;
 
 public class Main {
 
-        public static final String WILD_CARD = "Wild Card";
-        public static final String DIVISIONAL = "Divisional";
-        public static final String CONFERENCE = "Conference";
-        public static final String SUPER_BOWL = "Super Bowl";
-
         public static Map<String, Predictions> user_predictions;
         public static Set<String> valid_teams;
         public static String data_path;
+        public static String[] rounds;
 
         public static void main(String[] args) throws Exception {
                 // Initialize variables
                 user_predictions = new HashMap<>();
                 valid_teams = new HashSet<>();
                 data_path = new File("").getAbsolutePath() + "/NFLPlayoffPredictions/data";
-
+                rounds = new String[] { "Wild Card", "Divisional", "Conference", "Superbowl" };
                 // Load teams from nfl_teams.txt
                 try {
                         System.out.println("Loading Teams:");
@@ -89,8 +85,6 @@ public class Main {
                 hitch_route_panel_predictions.add(user_predictions.get("Anish Kottu 1"));
                 hitch_route_pool_predictions.add(user_predictions.get("Anish Kottu 1"));
 
-                String[] rounds = { WILD_CARD, DIVISIONAL, CONFERENCE, SUPER_BOWL };
-
                 HashMap<String, TreeMap<String, Integer>> roland_glen_prediction_map = new HashMap<>();
                 initializePredictionMap(roland_glen_prediction_map);
                 populatePredictionMap(roland_glen_predictions, rounds, roland_glen_prediction_map);
@@ -140,8 +134,6 @@ public class Main {
                 bettingPool.add(user_predictions.get("Ram G"));
                 bettingPool.add(user_predictions.get("Jay"));
                 bettingPool.add(user_predictions.get("Alex F"));
-
-                String[] rounds = { WILD_CARD, DIVISIONAL, CONFERENCE, SUPER_BOWL };
 
                 HashMap<String, TreeMap<String, Integer>> rgPredictionMap = new HashMap<>();
                 initializePredictionMap(rgPredictionMap);
@@ -218,9 +210,9 @@ public class Main {
         private static void displayWinnerPickFrequencies(
                         HashMap<String, TreeMap<String, Integer>> predictionMap) {
 
-                System.out.format("%12s%12s%12s%12s%12s\n", "", WILD_CARD, DIVISIONAL, CONFERENCE, SUPER_BOWL);
+                System.out.format("%12s%12s%12s%12s%12s\n", "", "Wild Card", "Divisional", "Conference", "Superbowl");
 
-                for (String team : predictionMap.get(WILD_CARD).keySet()) {
+                for (String team : predictionMap.get("Wild Card").keySet()) {
                         System.out.format("%12s", team);
                         for (String round : predictionMap.keySet()) {
                                 System.out.format("%12d", predictionMap.get(round).get(team));
@@ -282,10 +274,10 @@ public class Main {
                 initializeRoundMap(conferencePredictions);
                 initializeRoundMap(superBowlPredictions);
 
-                predictionMap.put(WILD_CARD, wildCardPredictions);
-                predictionMap.put(DIVISIONAL, divisionalPredictions);
-                predictionMap.put(CONFERENCE, conferencePredictions);
-                predictionMap.put(SUPER_BOWL, superBowlPredictions);
+                predictionMap.put("Wild Card", wildCardPredictions);
+                predictionMap.put("Divisional", divisionalPredictions);
+                predictionMap.put("Conference", conferencePredictions);
+                predictionMap.put("Superbowl", superBowlPredictions);
         }
 
         private static void initializeRoundMap(TreeMap<String, Integer> map) {
