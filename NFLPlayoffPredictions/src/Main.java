@@ -40,19 +40,19 @@ public class Main {
                         System.out.println("Loading Brackets:");
                         System.out.println("--------------------------------------");
 
-                        File file = new File(data_path + "/2021_results.txt");
+                        File file = new File(data_path + "/2022_predictions.txt");
                         Scanner scanner = new Scanner(new FileReader(file));
 
                         while (scanner.hasNextLine()) {
                                 String user = scanner.nextLine().trim();
                                 List<String> wildCardRound = new ArrayList<String>(
-                                                Arrays.asList(scanner.nextLine().split(",")));
+                                                Arrays.asList(scanner.nextLine().split(", ")));
                                 List<String> divisionalRound = new ArrayList<String>(
-                                                Arrays.asList(scanner.nextLine().split(",")));
+                                                Arrays.asList(scanner.nextLine().split(", ")));
                                 List<String> conferenceRound = new ArrayList<String>(
-                                                Arrays.asList(scanner.nextLine().split(",")));
+                                                Arrays.asList(scanner.nextLine().split(", ")));
                                 List<String> superbowlRound = new ArrayList<String>(
-                                                Arrays.asList(scanner.nextLine().split(",")));
+                                                Arrays.asList(scanner.nextLine().split(", ")));
 
                                 Predictions bracket = new Predictions(user, wildCardRound, divisionalRound,
                                                 conferenceRound, superbowlRound, 0);
@@ -72,18 +72,39 @@ public class Main {
                 } catch (Exception ex) {
                         throw new Exception(ex);
                 }
-                results2021();
+//                results2021();
+                predictions2022();
         }
 
         // IDK WHAT THIS DOES?
-        private static void idkwhatthisdoes() {
+        private static void predictions2022() {
                 List<Predictions> roland_glen_predictions = new ArrayList<>();
                 List<Predictions> hitch_route_panel_predictions = new ArrayList<>();
                 List<Predictions> hitch_route_pool_predictions = new ArrayList<>();
 
-                roland_glen_predictions.add(user_predictions.get("Anish Kottu 1"));
-                hitch_route_panel_predictions.add(user_predictions.get("Anish Kottu 1"));
-                hitch_route_pool_predictions.add(user_predictions.get("Anish Kottu 1"));
+                roland_glen_predictions.add(user_predictions.get("Adit Acharya 1"));
+
+
+                hitch_route_panel_predictions.add(user_predictions.get("Rob Palmisano 1"));
+
+
+                hitch_route_pool_predictions.add(user_predictions.get("Allan Chen 1"));
+                hitch_route_pool_predictions.add(user_predictions.get("Chaz Beauchamp 1"));
+                hitch_route_pool_predictions.add(user_predictions.get("Dylan Zumar 1"));
+                hitch_route_pool_predictions.add(user_predictions.get("Jack Neumann 1"));
+                hitch_route_pool_predictions.add(user_predictions.get("Jake Brandberg 1"));
+                hitch_route_pool_predictions.add(user_predictions.get("Jesse Kireyev 1"));
+                hitch_route_pool_predictions.add(user_predictions.get("Jesse Kireyev 2"));
+                hitch_route_pool_predictions.add(user_predictions.get("Nick Oleinik 1"));
+                hitch_route_pool_predictions.add(user_predictions.get("Rob Palmisano 1"));
+                hitch_route_pool_predictions.add(user_predictions.get("Rick Palmisano 1"));
+                hitch_route_pool_predictions.add(user_predictions.get("Sam Auld 1"));
+                hitch_route_pool_predictions.add(user_predictions.get("Sanjay Ravindra 1"));
+                hitch_route_pool_predictions.add(user_predictions.get("Sean Keating 1"));
+                hitch_route_pool_predictions.add(user_predictions.get("Shanrick Mullings 1"));
+                hitch_route_pool_predictions.add(user_predictions.get("Shanrick Mullings 2"));
+                hitch_route_pool_predictions.add(user_predictions.get("Shanrick Mullings 3"));
+                hitch_route_pool_predictions.add(user_predictions.get("Thomas Williford 1"));
 
                 HashMap<String, TreeMap<String, Integer>> roland_glen_prediction_map = new HashMap<>();
                 initializePredictionMap(roland_glen_prediction_map);
@@ -93,9 +114,28 @@ public class Main {
                 System.out.println();
                 displayWinnerPickFrequencies(roland_glen_prediction_map);
 
-                roland_glen_predictions.add(user_predictions.get("CHALK"));
-                hitch_route_panel_predictions.add(user_predictions.get("CHALK"));
-                hitch_route_pool_predictions.add(user_predictions.get("CHALK"));
+                HashMap<String, TreeMap<String, Integer>> hitch_route_panel_prediction_map =
+                    new HashMap<>();
+                initializePredictionMap(hitch_route_panel_prediction_map);
+                populatePredictionMap(hitch_route_panel_predictions, rounds, hitch_route_panel_prediction_map);
+                System.out.println();
+                System.out.format("%60s\n", "HITCH ROUTE PANEL WINNER FREQUENCIES");
+                System.out.println();
+                displayWinnerPickFrequencies(hitch_route_panel_prediction_map);
+
+                HashMap<String, TreeMap<String, Integer>> hitch_route_pool_prediction_map =
+                    new HashMap<>();
+                initializePredictionMap(hitch_route_pool_prediction_map);
+                populatePredictionMap(hitch_route_pool_predictions, rounds,
+                    hitch_route_pool_prediction_map);
+                System.out.println();
+                System.out.format("%60s\n", "HITCH ROUTE POOL WINNER FREQUENCIES");
+                System.out.println();
+                displayWinnerPickFrequencies(hitch_route_pool_prediction_map);
+
+                roland_glen_predictions.add(user_predictions.get("CHALK -"));
+                hitch_route_panel_predictions.add(user_predictions.get("CHALK -"));
+                hitch_route_pool_predictions.add(user_predictions.get("CHALK -"));
 
                 updatePoints(
                                 user_predictions.get("CORRECT"),
@@ -104,8 +144,13 @@ public class Main {
                                 hitch_route_pool_predictions);
 
                 Collections.shuffle(roland_glen_predictions);
+                Collections.shuffle(hitch_route_panel_predictions);
+                Collections.shuffle(hitch_route_pool_predictions);
 
                 Collections.sort(roland_glen_predictions, Collections.reverseOrder());
+                Collections.sort(hitch_route_panel_predictions, Collections.reverseOrder());
+                Collections.sort(hitch_route_pool_predictions, Collections.reverseOrder());
+
 
                 System.out.println("\n\n");
 
@@ -116,8 +161,27 @@ public class Main {
                         System.out.format("%3d%25s%5d%2s%4d\n", i + 1, p.getName(), p.getTotalPoints(), "/",
                                         p.getMaxPoints());
                 }
-
                 System.out.println("\n\n");
+
+                System.out.format("%39s\n", "HITCH ROUTE PANEL STANDINGS");
+                System.out.println();
+                for (int i = 0; i < hitch_route_panel_predictions.size(); i++) {
+                        Predictions p = hitch_route_panel_predictions.get(i);
+                        System.out.format("%3d%25s%5d%2s%4d\n", i + 1, p.getName(), p.getTotalPoints(), "/",
+                            p.getMaxPoints());
+                }
+                System.out.println("\n\n");
+
+                System.out.format("%39s\n", "HITCH ROUTE POOL STANDINGS");
+                System.out.println();
+                for (int i = 0; i < hitch_route_pool_predictions.size(); i++) {
+                        Predictions p = hitch_route_pool_predictions.get(i);
+                        System.out.format("%3d%25s%5d%2s%4d\n", i + 1, p.getName(), p.getTotalPoints(), "/",
+                            p.getMaxPoints());
+                }
+                System.out.println("\n\n");
+
+
         }
 
         private static void results2021() {
