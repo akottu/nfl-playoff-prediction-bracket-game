@@ -278,8 +278,12 @@ public class Main {
 
                 for (String team : predictionMap.get("Wild Card").keySet()) {
                         System.out.format("%12s", team);
-                        for (String round : predictionMap.keySet()) {
-                                System.out.format("%12d", predictionMap.get(round).get(team));
+                        for (String round : rounds) {
+                                if(round.equals(rounds[0]) && (team.equals("PACKERS") || team.equals("TITANS"))) {
+                                        System.out.format("%12s", "--");
+                                } else {
+                                        System.out.format("%12d", predictionMap.get(round).get(team));
+                                }
                         }
                         System.out.format("\n");
                 }
