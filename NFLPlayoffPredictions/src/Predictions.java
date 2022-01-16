@@ -36,54 +36,99 @@ public class Predictions implements Comparable {
 
     public void updatePoints(Predictions correct) {
 
+        int wildCardPredictionsNeeded = 6;
+        for(String result : correct.wildCardPredictions) {
+            if(result.equals("EMPTY")) {
+                wildCardPredictionsNeeded--;
+            }
+        }
         for(int i = 0; i < this.wildCardPredictions.size(); i++) {
-            if (correct.wildCardPredictions.contains(this.wildCardPredictions.get(i))) {
+            if(wildCardPredictionsNeeded == 0) {
+                break;
+            }
+            if(this.getName().equals("Mohammad Khatami 1")) {
+                System.out.println();
+            }
+            if (this.wildCardPredictions.contains(correct.wildCardPredictions.get(i))) {
                 this.totalPoints += 10;
             } else {
-//                this.maxPoints -= 10;
-                if(this.divisionalRoundPredictions.contains(this.wildCardPredictions.get(i))) {
-//                    this.maxPoints -= 20;
+                this.maxPoints -= 10;
+                if(this.divisionalRoundPredictions.contains(correct.wildCardPredictions.get(i))) {
+                    this.maxPoints -= 20;
                 }
-                if(this.conferenceTitlePredictions.contains(this.wildCardPredictions.get(i))) {
-//                    this.maxPoints -= 40;
+                if(this.conferenceTitlePredictions.contains(correct.wildCardPredictions.get(i))) {
+                    this.maxPoints -= 40;
                 }
-                if(this.superbowlPredictions.contains(this.wildCardPredictions.get(i))) {
-//                    this.maxPoints -= 80;
+                if(this.superbowlPredictions.contains(correct.wildCardPredictions.get(i))) {
+                    this.maxPoints -= 80;
                 }
             }
+            wildCardPredictionsNeeded--;
         }
 
+        int divisionalRoundPredictionsNeeded = 4;
+        for(String result : correct.divisionalRoundPredictions) {
+            if(result.equals("EMPTY")) {
+                divisionalRoundPredictionsNeeded--;
+            }
+        }
         for(int i = 0; i < this.divisionalRoundPredictions.size(); i++) {
-            if (correct.divisionalRoundPredictions.contains(this.divisionalRoundPredictions.get(i))) {
+            if(divisionalRoundPredictionsNeeded == 0) {
+                break;
+            }
+            if (this.divisionalRoundPredictions.contains(correct.divisionalRoundPredictions.get(i))) {
                 this.totalPoints += 20;
             } else {
-//                this.maxPoints -= 20;
-//                if(this.conferenceTitlePredictions.contains(this.divisionalRoundPredictions.get(i))) {
-//                    this.maxPoints -= 40;
-//                }
-//                if(this.superbowlPredictions.contains(this.divisionalRoundPredictions.get(i))) {
-//                    this.maxPoints -= 80;
-//                }
+                this.maxPoints -= 20;
+                if(this.conferenceTitlePredictions.contains(correct.divisionalRoundPredictions
+                .get(i))) {
+                    this.maxPoints -= 40;
+                }
+                if(this.superbowlPredictions.contains(correct.divisionalRoundPredictions.get(i)
+                )) {
+                    this.maxPoints -= 80;
+                }
             }
+            divisionalRoundPredictionsNeeded--;
         }
 
+        int conferenceTitlePredictionsNeeded = 2;
+        for(String result : correct.conferenceTitlePredictions) {
+            if(result.equals("EMPTY")) {
+                conferenceTitlePredictionsNeeded--;
+            }
+        }
         for(int i = 0; i < this.conferenceTitlePredictions.size(); i++) {
-            if (correct.conferenceTitlePredictions.contains(this.conferenceTitlePredictions.get(i))) {
+            if(conferenceTitlePredictionsNeeded == 0) {
+                break;
+            }
+            if (this.conferenceTitlePredictions.contains(correct.conferenceTitlePredictions.get(i))) {
                 this.totalPoints += 40;
             } else {
-//                this.maxPoints -= 40;
-//                if(this.superbowlPredictions.contains(this.conferenceTitlePredictions.get(i))) {
-//                    this.maxPoints -= 80;
-//                }
+                this.maxPoints -= 40;
+                if(this.superbowlPredictions.contains(correct.conferenceTitlePredictions.get(i))) {
+                    this.maxPoints -= 80;
+                }
             }
+            conferenceTitlePredictionsNeeded--;
         }
 
+        int superbowlPredictionsNeeded = 1;
+        for(String result : correct.superbowlPredictions) {
+            if(result.equals("EMPTY")) {
+                superbowlPredictionsNeeded--;
+            }
+        }
         for(int i = 0; i < this.superbowlPredictions.size(); i++) {
-            if (correct.superbowlPredictions.contains(this.superbowlPredictions.get(i))) {
+            if(superbowlPredictionsNeeded == 0) {
+                break;
+            }
+            if (this.superbowlPredictions.contains(correct.superbowlPredictions.get(i))) {
                 this.totalPoints += 80;
             } else {
-//                this.maxPoints -= 80;
+                this.maxPoints -= 80;
             }
+            superbowlPredictionsNeeded--;
         }
 
     }
@@ -149,16 +194,18 @@ public class Predictions implements Comparable {
         Predictions p = (Predictions)o;
         int result = 0;
         if(this.getTotalPoints() > p.getTotalPoints()) {
-            result++;
-            if(this.getMaxPoints() > p.getMaxPoints()) {
-                result++;
-            }
+            return 1;
         } else if(this.getTotalPoints() < p.getTotalPoints()){
-            result--;
-            if(this.getMaxPoints() < p.getMaxPoints()) {
-                result--;
+            return -1;
+        }
+        else {
+            if(this.getMaxPoints() > p.getMaxPoints()) {
+                return 1;
+            } else if(this.getMaxPoints() < p.getMaxPoints()) {
+                return -1;
+            } else {
+                return 0;
             }
         }
-        return result;
     }
 }
